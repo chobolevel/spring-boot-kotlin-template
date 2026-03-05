@@ -1,0 +1,63 @@
+package com.template.config.security
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.invoke
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+class SecurityConfig {
+    @Bean
+    fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*")
+        configuration.allowedMethods = listOf("POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS")
+        configuration.allowedHeaders =
+            listOf(
+                "Authorization",
+                "Content-Type",
+                "X-Requested-With",
+                "Accept",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers",
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Credentials",
+                "Cookie",
+            )
+        configuration.exposedHeaders =
+            listOf(
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Credentials",
+                "Authorization",
+                "Content-Disposition",
+                "Set-Cookie",
+            )
+        configuration.maxAge = 3600
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+
+    @Bean
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+        http {
+            cors { }
+            csrf { disable() }
+            authorizeHttpRequests {
+                authorize(anyRequest, permitAll)
+            }
+            addFilterAfter<UsernamePasswordAuthenticationFilter>(OnceAuthorizeFilter())
+        }
+        return http.build()
+    }
+}
