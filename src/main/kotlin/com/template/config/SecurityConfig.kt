@@ -1,4 +1,4 @@
-package com.template.config.security
+package com.template.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

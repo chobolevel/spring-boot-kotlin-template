@@ -1,4 +1,4 @@
-package com.template.config.security
+package com.template.config
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
