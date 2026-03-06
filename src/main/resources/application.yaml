@@ -31,12 +31,11 @@ spring:
       ddl-auto: validate
   jackson:
     property-naming-strategy: SNAKE_CASE
-
-redis:
-  plink:
-    host: localhost
-    port: 6379
-    password:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
 
 # JWT
 jwt:
