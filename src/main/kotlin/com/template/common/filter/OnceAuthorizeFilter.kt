@@ -1,4 +1,4 @@
-package com.template.config
+package com.template.common.filter
 
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

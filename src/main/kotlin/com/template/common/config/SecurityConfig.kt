@@ -1,5 +1,6 @@
-package com.template.config
+package com.template.common.config
 
+import com.template.common.filter.OnceAuthorizeFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
